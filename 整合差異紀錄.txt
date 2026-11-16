@@ -1,3 +1,25 @@
+StrangeRoom03 本機整合審核紀錄 — 第三關確認更新
+目前狀態：已確認正式第三關為 /Game/RM03/Room03；先在本機測試，未上傳本次修正。
+
+本次變更
+1. 主選單 3、Continue、第二關出口均指向完整 /Game/RM03/Room03。
+2. 第三關完成後指向第四關 /Game/TeamLevels/L04_LaserArchive/L04_LaserArchive。
+3. 第三關 R／跌落重試指向完整正式地圖；其他關卡重試行為不變。
+4. 第三關使用正確章節 HUD；章節標示 04 改 03，提示的兩秒改成實際半秒。
+5. 存檔寫入正式完整路徑；已知舊 Room02／Room03 章節名稱轉至正式第三關。
+6. 正式 MapsToCook 保留主選單加七關；舊 StrangeRooms/Room03 實體檔案仍保留。
+7. 未改平台速度、崩塌時間、碰撞、完成閾值或角色移動參數。
+
+驗證紀錄位於工作區 Integration_20261116/L03Confirmed：
+before.json / Backup：修改前基線與備份。
+SharedRouting/apply_result.json / fresh_validation_result.json：接線保存及重新載入驗證。
+CharacterRetry/apply_result.json / validate_result.json：重試及 HUD 修正驗證。
+map_apply.json / map_validate.json：地圖文字修改與重新載入驗證。
+fresh_validation.json：八張正式地圖重新載入及關卡腳本編譯。
+scope_audit.json：本次變更檔案範圍。
+
+以下保留第一次整合的歷史紀錄；其中「第三關待確認」已由上述本次決定取代。
+---------------------------------------------------------------------
 StrangeRoom03 本機整合審核紀錄
 狀態：2026-11-16；其餘關卡的整合與背景驗證已完成，第三關正式入口仍待確認。
 
