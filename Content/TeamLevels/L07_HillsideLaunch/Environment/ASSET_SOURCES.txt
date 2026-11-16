@@ -1,0 +1,22 @@
+Level 07 environment assets
+
+Source: Poly Haven
+Asset license: CC0 1.0 (https://polyhaven.com/license)
+
+Models:
+https://polyhaven.com/a/tree_small_02
+https://polyhaven.com/a/pine_sapling_small
+https://polyhaven.com/a/fern_02
+https://polyhaven.com/a/grass_medium_02
+https://polyhaven.com/a/rock_moss_set_01
+
+Ground surfaces:
+https://polyhaven.com/a/brown_mud_leaves_01
+https://polyhaven.com/a/forest_ground_04
+
+Imported as editable UE4.27 assets with 2K texture limits, custom materials,
+generated distance LODs and non-colliding vegetation. Material adjustments
+and level placement are local to Level 07. The protagonist is unchanged.
+
+This folder contains the assets used by /Game/StrangeRooms/Room06.
+Use Unreal's Migrate command with its dependency selection when merging.

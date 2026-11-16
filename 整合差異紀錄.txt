@@ -1,0 +1,58 @@
+StrangeRoom03 本機整合審核紀錄
+狀態：2026-11-16；其餘關卡的整合與背景驗證已完成，第三關正式入口仍待確認。
+
+一、修改範圍與來源衝突
+本次目標是新的工作副本：
+C:\Users\Study\Documents\ChatGPT\Gaming Project\output\integrated_20261116\StrangeRoom03
+來源分支快照及原本 L07 Summit 專案不作為本次修改目的地。
+L05 ZIP 已解壓到新的 Integration_20261116\Sources\L05，147 個檔案逐項驗證 CRC。
+與 Base 比對後，僅複製 L05 私有的 BP_ShaftFlow.uasset 與 L05_DeepElevatorShaft.umap。
+ZIP 另有不同版本的共享 BP_SR03Flow、BP_SR03HUD、五個 Config 及 .uproject；另帶 Room07、Room08 與範例地圖 BuiltData。這些均沒有覆蓋整合副本。共用選單及流程以 Base 為基礎作明確接關修改，不採用 ZIP 的舊九章版本。
+
+其他分支的關卡外差異：
+L03 由較舊底本分出，附帶舊 Flow/HUD、Room07/08、設定及 README 差異，沒有整份覆蓋；其共用角色／移動平台沒有實質玩法差異，崩塌平台延遲 2→1 秒的共用修改並非候選地圖依賴，所以保留 Base。
+L04、L07 分支均附帶與 L02 完全相同的第二關修改；只從 L02 取一次，沒有重複覆蓋。
+L07 共用 HUD 的差異只是選單第七關名稱，共用 JumpSwitchCharacter 主要為重新序列化；保留 Base 並獨立更新選單。第七關私有主角使用最新遠端版本。
+L06 沒有共用檔案修改，但包含 Niagara 資產卻未啟用插件；已只在此副本 .uproject 啟用引擎內置 Niagara。
+本次必要共用修改只有明確的選單／Continue／章節入口接線，另更新本副本的 MapsToCook；所有來源快照均保持原雜湊。
+
+二、L05 安全檢查
+ZIP SHA256：4d1f4ab04a2eecb55cf6881d6111e06b1ac8b0ab04c747df8b82bac6e3a62f1a
+靜態檢查未發現路徑穿越、絕對／UNC／ADS 路徑、Windows 保留名稱、連結、加密、重複／大小寫碰撞、壓縮炸彈跡象、可執行檔、腳本、自訂插件或巢狀壓縮檔；原 ZIP 前後雜湊一致。
+使用者明確確認：Surfshark 已完整掃描該 ZIP，沒有偵測到威脅。這是使用者提供的掃描結果，並非本代理獨立驗證。
+Windows Defender 嘗試掃描失敗：服務／防毒未啟用，exit 2、HRESULT 0x80004005；沒有可用病毒碼日期，不能記為掃描通過。沒有關閉或變更安全設定。
+靜態檢查及防毒結果不等於保證所有 Unreal Blueprint 行為安全；沒有執行 ZIP 內的文件指示或附帶腳本。
+
+三、正式入口與保留候選
+主選單：/Game/StrangeRooms/RoomMenu
+L01：/Game/Opening/Opening
+L02：/Game/StrangeRooms/Room01
+L03：尚待隊伍確認；保留 /Game/StrangeRooms/Room03 與 /Game/RM03/Room03 兩個不同候選，不擅自選定。
+L04：/Game/TeamLevels/L04_LaserArchive/L04_LaserArchive
+L05：/Game/TeamLevels/L05_DeepElevatorShaft/L05_DeepElevatorShaft
+L06：/Game/TeamLevels/L06_WeaponEscort/L06_WeaponEscort
+L07：/Game/StrangeRooms/Room06
+L05 說明中的 /Game/StrangeRooms/Room05 是外觀及移動參考，並非本次第五關入口。
+
+四、接關與控制決策
+L05 保留原有下落、踏板、錯誤落點復位及 R 全關重試；既有兩個重試節點均使用完整 L05 路徑。軍械庫完成後新增兩秒等待，再進入完整 L06 路徑；只改私有 BP_ShaftFlow 的完成訊息／時間／輸出連線及兩個新增節點，其餘既有 graph pin 保留。
+L05 保留單一共享 Flow 管理暫停、選單及存檔，不再放置重複的 CampaignBridge；共用 HUD 加入符合實際玩法的第五關標題與提示，由共用流程修改負責者統一處理。
+L02 原有 Enter 開始／解除移動鎖定流程保留；沒有擅自改為自動開始。L03 未確認前，不能聲稱 L02 至 L03 的正式接關已完成。
+L07 保留自己的 Esc 暫停及 R 重試；新增橋接僅記錄章節檢查點，避免重複處理 Esc。其原有操作沒有 P 或 M 返回選單，文件不可宣稱所有關卡統一支援 P／M；結局仍依原流程返回選單。
+
+五、已完成與仍待驗證
+L05 接關修改已在無遊玩模式的編輯器命令流程套用：Blueprint 編譯 0 errors／0 warnings，native 結果 0，原有 graph 保留檢查通過。這不代表整份引擎日誌完全沒有其他警告。
+整體相依檢查已由 Reports\dependency_audit.json 記錄：347 個套件解析、0 解析錯誤、0 正式關卡遺失依賴；9 個缺項屬未使用的 ThirdPersonExampleMap 原有資產。
+最終檢查：Flow／CampaignBridge 放置完成；45 個 Blueprint 編譯 0 errors／0 warnings／0 failed loads；9 張地圖於全新程序載入，第四關 LevelScript 編譯 0 errors／0 warnings；43 項保存接線檢查通過。已修復並以重新載入驗證新增節點的原生預設值／自訂值保存問題。
+保存範圍檢查：356 個基準檔案無遺失，沒有預定範圍外修改；僅新增 CampaignBridge 資產。1,088 個來源分支快照檔案雜湊全部保持不變。
+仍待使用者／組員確認：L03 正式地圖，以及使用者實際試玩。
+未進行 PIE、人工／自動遊玩、截圖或效能測試；實際遊玩交由使用者。
+
+主要證據（相對於 Integration_20261116）：
+Security\level5_zip_inspection_20261116T110853_863264Z.json
+Security\level5_defender_20261116T112931_800735Z.json
+Security\L05Implementation\extraction_compare_20261116T113956_948155Z.json
+Security\L05Implementation\staging_manifest.json
+Security\L05Implementation\ue_apply_20261116T115348_498463Z.json
+Reports\L05_20261116T115342_910Z.log
+Reports\dependency_audit.json
